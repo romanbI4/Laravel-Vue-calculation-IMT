@@ -15,6 +15,7 @@ class Calculations extends Controller
 		if($request->input('weight') && $request->input('height')) {
 			$calc = $request->input('weight') / pow($request->input('height') / 100, 2);
 		}
-		return view('calculations')->with('calc',$calc);
+
+		return view('calculations')->with('calc', $calc);
 	}
 }
