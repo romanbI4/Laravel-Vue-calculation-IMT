@@ -31,7 +31,7 @@ down: ## Stop the docker hub
 	@$(DOCKER_COMP) down --remove-orphans
 
 chmod:
-	@$(PHP_CONT) sh -c "cd backend; chmod 777 -R storage; chmod 777 -R storage/logs; chmod 777 -R database/migrations; chmod 777 -R database/factories; chmod 777 -R database/seeds;"
+	@$(PHP_CONT) sh -c "cd backend; chmod 777 -R storage; chmod 777 -R storage/logs; chmod 777 -R database/migrations; chmod 777 -R database/factories; chmod 777 -R database/seeds; chmod 777 -R resources;"
 
 sh: ## Connect to the PHP FPM container
 	@$(PHP_CONT) sh
@@ -45,6 +45,17 @@ migrate:
 logs: ## Show live logs
 	@$(DOCKER_COMP) logs --tail=0 --follow
 
+## —— FRONT  ———————————————————————————————————————————————————————————————————
+
+admin-watch:
+	$(PHP_CONT) sh -c "cd backend; npm run watch"
+
+admin-build:
+	$(PHP_CONT) sh -c "cd backend; composer require laravel/ui:^2.4; php artisan ui vue"
+
+npm-install:
+	$(PHP_CONT) sh -c "cd backend; npm install;"
+
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
 	@$(eval c ?=)
@@ -53,11 +64,3 @@ composer: ## Run composer, pass the parameter "c=" to run a given command, examp
 vendor: ## Install vendors according to the current composer.lock file
 vendor: c=install --prefer-dist --no-dev --no-progress --no-scripts --no-interaction
 vendor: composer
-
-## —— Symfony 🎵 ———————————————————————————————————————————————————————————————
-sf: ## List all Symfony commands or pass the parameter "c=" to run a given command, example: make sf c=about
-	@$(eval c ?=)
-	@$(SYMFONY) $(c)
-
-cc: c=c:c ## Clear the cache
-cc: sf

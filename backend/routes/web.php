@@ -17,5 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/calculations','Calculations');
+Route::resource('/calculations','Calculations')->name('store', 'calculations');
 

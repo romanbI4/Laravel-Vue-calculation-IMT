@@ -1,16 +1,18 @@
-<h2>Расчет!</h2>
-
-<?php
-use Symfony\Component\Console\Input\Input;
-
-echo Form::open(array('url' => '/calculations','POST'));
-
-echo Form::label('weight', 'Ваш Вес') . Form::number('weight', 'вес в кг', ['step' => '0.01']);
-echo Form::label('height', 'Ваш рост') . Form::number('height', 'рост в м', ['step' => '0.01']);
-
-echo Form::submit('Расчет!');
-
-echo Form::token() . Form::close();
-?>
-
-<p>Ваш ИМТ: {{ $calc ?? '' }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="{{ mix('/css/app.css') }}" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+</head>
+<body>
+<div id="app">
+    <div class="py-4">
+        @yield('content')
+        <calculate-component></calculate-component>
+    </div>
+</div>
+<script src="{{ mix('/js/app.js') }}" defer></script>
+</body>
+</html>
