@@ -16,6 +16,6 @@ class Calculations extends Controller
 			$calc = $request->input('weight') / pow($request->input('height') / 100, 2);
 		}
 
-		return $calc ?? null;
+		return round($calc, 2) ?? null;
 	}
 }

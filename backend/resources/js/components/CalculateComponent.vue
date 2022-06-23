@@ -17,11 +17,34 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <input type="submit" class="btn btn-success" v-on:click="calculate()" value="Расчет!">
-                <h3>
-                    <p v-if="imt">
+                <h2 v-if="imt">
+                    <p>
                         Ваш ИМТ: {{ imt }}
                     </p>
-                </h3>
+                    <p align="center">
+                        Интерпретация индекса массы тела
+                    </p>
+                    <div class="align-content-center" v-if="imt">
+                        <p v-if="imt < 18.5" class="bg-success">
+                            Ниже нормального веса
+                        </p>
+                        <p v-if="imt >= 18.5 && imt < 25" class="bg-success">
+                            Нормальный вес
+                        </p>
+                        <p v-if="imt >= 25 && imt < 30" class="bg-success">
+                            Избыточный вес
+                        </p>
+                        <p v-if="imt >= 30 && imt < 35" class="bg-success">
+                            Ожирение I степени
+                        </p>
+                        <p v-if="imt >= 35 && imt < 40" class="bg-success">
+                            Ожирение II степени
+                        </p>
+                        <p v-if="imt > 40" class="bg-success">
+                            Ожирение III степени
+                        </p>
+                    </div>
+                </h2>
             </div>
         </div>
     </div>
