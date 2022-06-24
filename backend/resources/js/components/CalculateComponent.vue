@@ -1,30 +1,44 @@
 <template>
-    <div>
-        <h2 align="center">
+    <div align="center">
+        <h1>
             Расчет ИМТ человека
-        </h2>
-        <div class="form-group">
+        </h1>
+
+        <p v-if="errors.length" class="alert-danger">
+            <b>
+                Пожалуйста исправьте указанные ошибки:
+            </b>
+        <ul>
+            <li v-for="error in errors" class="list-inline">
+                {{ error }}
+            </li>
+        </ul>
+        </p>
+
+        <div class="form-group align-content-center">
             <label for="height">Ваш рост</label>
             <input type="number" class="form-control" id="height" placeholder="рост в м" step="0.01"
-                   v-model="form.height">
-        </div>
-        <div class="form-group">
-            <label for="weight">Ваш вес</label>
-            <input type="number" class="form-control" id="weight" placeholder="вес в кг" step="0.01"
-                   v-model="form.weight">
+                   v-model="form.height" @input="calculate()" required>
         </div>
 
-        <div class="panel panel-default">
+        <div class="form-group align-content-center">
+            <label for="weight">Ваш вес</label>
+            <input type="number" class="form-control" id="weight" placeholder="вес в кг" step="0.01"
+                   v-model="form.weight" @input="calculate()" required>
+        </div>
+
+        <div class="panel panel-default" v-if="imt">
             <div class="panel-body">
-                <input type="submit" class="btn btn-success" v-on:click="calculate()" value="Расчет!">
-                <h2 v-if="imt">
-                    <p>
-                        Ваш ИМТ: {{ imt }}
-                    </p>
-                    <p align="center">
-                        Интерпретация индекса массы тела
-                    </p>
-                    <div class="align-content-center" v-if="imt">
+                <div class="align-content-center">
+                    <h3>
+                        <p class="alert-primary">
+                            Ваш ИМТ: {{ imt }}
+                        </p>
+                        <p>
+                            <i>
+                                Интерпретация индекса массы тела
+                            </i>
+                        </p>
                         <p v-if="imt < 18.5" class="bg-success">
                             Ниже нормального веса
                         </p>
@@ -43,8 +57,8 @@
                         <p v-if="imt > 40" class="bg-success">
                             Ожирение III степени
                         </p>
-                    </div>
-                </h2>
+                    </h3>
+                </div>
             </div>
         </div>
     </div>
@@ -58,12 +72,35 @@ export default {
             form: {
                 weight: '',
                 height: ''
-            }
+            },
+            errors: []
         }
     },
     methods: {
+        checkForm() {
+            this.errors = [];
+
+            if (!this.form.height) {
+                this.errors.push('Укажите рост.');
+            } else if (!this.validateNumber(this.form.height)) {
+                this.errors.push('Укажите корректный рост. ');
+            }
+            if (!this.form.weight) {
+                this.errors.push('Укажите вес.');
+            } else if (!this.validateNumber(this.form.weight)) {
+                this.errors.push('Укажите корректный вес.');
+            }
+
+            if (!this.errors.length) {
+                return true;
+            }
+        },
+        validateNumber: function (text) {
+            var filter = /[\+]?([\-]?([0-9]{1,})?[\.]?[0-9]{1,})/;
+            return filter.test(text);
+        },
         calculate() {
-            if (confirm("Do you really want to calculate it?")) {
+            if (this.checkForm()) {
                 axios.post('/calculations', this.form)
                     .then(response => {
                         this.imt = response.data;
@@ -72,7 +109,7 @@ export default {
                         console.log(error);
                     })
             }
-        }
+        },
     }
 }
 </script>
