@@ -18,13 +18,13 @@
         <div class="form-group align-content-center">
             <label for="height">Ваш рост</label>
             <input type="number" class="form-control" id="height" placeholder="рост в м" step="0.01"
-                   v-model="form.height" @input="calculate()" required>
+                   v-model="form.height" @input="calculate()" min="1" max="3" required>
         </div>
 
         <div class="form-group align-content-center">
             <label for="weight">Ваш вес</label>
             <input type="number" class="form-control" id="weight" placeholder="вес в кг" step="0.01"
-                   v-model="form.weight" @input="calculate()" required>
+                   v-model="form.weight" @input="calculate()" min="1" max="400" required>
         </div>
 
         <div class="panel panel-default" v-if="imt">
