@@ -35,3 +35,11 @@ services:
     ports:
       - "81:81"
       - "444:444"
+    networks:
+      default:
+        ipv4_address: 172.10.0.102
+
+networks:
+  default:
+    external:
+      name: docker_default
