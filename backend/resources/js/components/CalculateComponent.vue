@@ -16,15 +16,15 @@
         </p>
 
         <div class="form-group align-content-center">
-            <label for="height">Ваш рост</label>
-            <input type="number" class="form-control" id="height" placeholder="рост в м" step="0.01"
-                   v-model="form.height" @input="calculate()" min=1 max=3 maxlength=4 required>
+            <label for="height">Ваш рост (см)</label>
+            <input type="number" class="form-control" id="height" placeholder="рост в см" step="1"
+                   v-model="form.height" @input="calculate()" min=1 max=250 minlength=1 maxlength=3 required>
         </div>
 
         <div class="form-group align-content-center">
-            <label for="weight">Ваш вес</label>
-            <input type="number" class="form-control" id="weight" placeholder="вес в кг" step="0.01"
-                   v-model="form.weight" @input="calculate()" min=1 max=400 maxlength=3 required>
+            <label for="weight">Ваш вес (кг)</label>
+            <input type="number" class="form-control" id="weight" placeholder="вес в кг" step="1"
+                   v-model="form.weight" @input="calculate()" min=1 max=250 minlength=1 maxlength=3 required>
         </div>
 
         <div class="panel panel-default" v-if="imt">
@@ -82,18 +82,30 @@ export default {
 
             if (!this.form.height) {
                 this.errors.push('Укажите рост.');
+                this.imt = null;
             } else if (!this.validateNumber(this.form.height)) {
                 this.errors.push('Укажите корректный рост. ');
-            } else if (this.form.height.length > 4 || parseInt(this.form.height) < 0) {
-                this.errors.push('Рост не может быть отрицательным либо 4-х значным числом. ');
+                this.imt = null;
+            } else if (this.form.height.length > 3 || parseInt(this.form.height) <= 0) {
+                this.errors.push('Рост не может быть отрицательным либо 4-х значным числом либо 0. ');
+                this.imt = null;
+            } else if (parseInt(this.form.height) > 250) {
+                this.errors.push('Рост не может быть больше 250 см. ');
+                this.imt = null;
             }
 
             if (!this.form.weight) {
                 this.errors.push('Укажите вес.');
+                this.imt = null;
             } else if (!this.validateNumber(this.form.weight)) {
                 this.errors.push('Укажите корректный вес.');
-            } else if (this.form.weight.length > 3 || parseInt(this.form.weight) < 0) {
-                this.errors.push('Вес не может быть отрицательным либо 4-х значным числом. ');
+                this.imt = null;
+            } else if (this.form.weight.length > 3 || parseInt(this.form.weight) <= 0) {
+                this.errors.push('Вес не может быть отрицательным либо 4-х значным числом либо 0. ');
+                this.imt = null;
+            } else if (parseInt(this.form.weight) > 250) {
+                this.errors.push('Вес не может быть больше 250 кг. ');
+                this.imt = null;
             }
 
             if (!this.errors.length) {
