@@ -35,8 +35,3 @@ services:
     ports:
       - "81:81"
       - "444:444"
-
-networks:
-  default:
-    external:
-      name: custom_net
