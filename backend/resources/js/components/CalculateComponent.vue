@@ -78,17 +78,21 @@ export default {
     },
     methods: {
         checkForm() {
-            if (this.form.height.length < 3 && parseInt(this.form.height) > 0 && this.form.weight.length < 3 && parseInt(this.form.weight) > 0) {
-                if (!this.form.height) {
-                    this.errors.push('Укажите рост.');
-                } else if (!this.validateNumber(this.form.height)) {
-                    this.errors.push('Укажите корректный рост. ');
-                }
-                if (!this.form.weight) {
-                    this.errors.push('Укажите вес.');
-                } else if (!this.validateNumber(this.form.weight)) {
-                    this.errors.push('Укажите корректный вес.');
-                }
+            if (this.form.height.length > 3 && parseInt(this.form.height) < 0) {
+                this.errors.push('Рост не может быть отрицательным либо 4-х значным числом. ');
+            }
+            if (this.form.weight.length > 3 && parseInt(this.form.weight) < 0) {
+                this.errors.push('Вес не может быть отрицательным либо 4-х значным числом. ');
+            }
+            if (!this.form.height) {
+                this.errors.push('Укажите рост.');
+            } else if (!this.validateNumber(this.form.height)) {
+                this.errors.push('Укажите корректный рост. ');
+            }
+            if (!this.form.weight) {
+                this.errors.push('Укажите вес.');
+            } else if (!this.validateNumber(this.form.weight)) {
+                this.errors.push('Укажите корректный вес.');
             }
 
             if (!this.errors.length) {
