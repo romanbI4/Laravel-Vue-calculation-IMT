@@ -80,7 +80,7 @@ export default {
         checkForm() {
             this.errors = [];
 
-            if (this.form.height > 0 && this.form.weight > 0) {
+            if (parseInt(this.form.height) > 0 && parseInt(this.form.weight) > 0) {
                 if (!this.form.height) {
                     this.errors.push('Укажите рост.');
                 } else if (!this.validateNumber(this.form.height)) {
