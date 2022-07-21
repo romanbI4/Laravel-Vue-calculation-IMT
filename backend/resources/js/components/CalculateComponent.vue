@@ -18,13 +18,13 @@
         <div class="form-group align-content-center">
             <label for="height">Ваш рост</label>
             <input type="number" class="form-control" id="height" placeholder="рост в м" step="0.01"
-                   v-model="form.height" @input="calculate()" min=1 max=3 required>
+                   v-model="form.height" @input="calculate()" min=1 max=3 maxlength=3 required>
         </div>
 
         <div class="form-group align-content-center">
             <label for="weight">Ваш вес</label>
             <input type="number" class="form-control" id="weight" placeholder="вес в кг" step="0.01"
-                   v-model="form.weight" @input="calculate()" min=1 max=400 required>
+                   v-model="form.weight" @input="calculate()" min=1 max=400 maxlength=3 required>
         </div>
 
         <div class="panel panel-default" v-if="imt">
@@ -78,17 +78,22 @@ export default {
     },
     methods: {
         checkForm() {
+            this.errors = [];
 
             if (!this.form.height) {
                 this.errors.push('Укажите рост.');
             } else if (!this.validateNumber(this.form.height)) {
                 this.errors.push('Укажите корректный рост. ');
+            } else if (this.form.height.length > 3 || parseInt(this.form.height) < 0) {
+                this.errors.push('Рост не может быть отрицательным либо 4-х значным числом. ');
             }
 
             if (!this.form.weight) {
                 this.errors.push('Укажите вес.');
             } else if (!this.validateNumber(this.form.weight)) {
                 this.errors.push('Укажите корректный вес.');
+            } else if (this.form.weight.length > 3 || parseInt(this.form.weight) < 0) {
+                this.errors.push('Вес не может быть отрицательным либо 4-х значным числом. ');
             }
 
             if (!this.errors.length) {
