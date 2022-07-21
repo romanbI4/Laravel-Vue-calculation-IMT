@@ -80,15 +80,17 @@ export default {
         checkForm() {
             this.errors = [];
 
-            if (!this.form.height) {
-                this.errors.push('Укажите рост.');
-            } else if (!this.validateNumber(this.form.height)) {
-                this.errors.push('Укажите корректный рост. ');
-            }
-            if (!this.form.weight) {
-                this.errors.push('Укажите вес.');
-            } else if (!this.validateNumber(this.form.weight)) {
-                this.errors.push('Укажите корректный вес.');
+            if (this.form.height > 0 && this.form.weight > 0) {
+                if (!this.form.height) {
+                    this.errors.push('Укажите рост.');
+                } else if (!this.validateNumber(this.form.height)) {
+                    this.errors.push('Укажите корректный рост. ');
+                }
+                if (!this.form.weight) {
+                    this.errors.push('Укажите вес.');
+                } else if (!this.validateNumber(this.form.weight)) {
+                    this.errors.push('Укажите корректный вес.');
+                }
             }
 
             if (!this.errors.length) {
