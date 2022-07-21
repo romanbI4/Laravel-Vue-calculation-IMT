@@ -18,7 +18,7 @@
         <div class="form-group align-content-center">
             <label for="height">Ваш рост</label>
             <input type="number" class="form-control" id="height" placeholder="рост в м" step="0.01"
-                   v-model="form.height" @input="calculate()" min=1 max=3 maxlength=3 required>
+                   v-model="form.height" @input="calculate()" min=1 max=3 maxlength=4 required>
         </div>
 
         <div class="form-group align-content-center">
@@ -84,7 +84,7 @@ export default {
                 this.errors.push('Укажите рост.');
             } else if (!this.validateNumber(this.form.height)) {
                 this.errors.push('Укажите корректный рост. ');
-            } else if (this.form.height.length > 3 || parseInt(this.form.height) < 0) {
+            } else if (this.form.height.length > 4 || parseInt(this.form.height) < 0) {
                 this.errors.push('Рост не может быть отрицательным либо 4-х значным числом. ');
             }
 
