@@ -79,7 +79,8 @@ export default {
     methods: {
         checkForm() {
             this.errors = [];
-
+            console.log(parseInt(this.form.height));
+            console.log(parseInt(this.form.weight));
             if (parseInt(this.form.height) > 0 && parseInt(this.form.weight) > 0) {
                 if (!this.form.height) {
                     this.errors.push('Укажите рост.');
