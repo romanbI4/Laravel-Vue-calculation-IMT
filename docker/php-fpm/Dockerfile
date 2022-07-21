@@ -24,4 +24,4 @@ WORKDIR /var/www
 
 #CMD composer i -o ; wait-for-it db:3306 -- yii migrate;  php-fpm
 
-EXPOSE 9001
+EXPOSE 9000
