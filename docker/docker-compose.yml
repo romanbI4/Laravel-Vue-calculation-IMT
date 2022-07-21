@@ -33,11 +33,8 @@ services:
     depends_on:
       - php-fpm
     ports:
-      - "81:80"
+      - "81:81"
       - "444:444"
-    networks:
-      default:
-        ipv4_address: 178.62.254.38
 
 networks:
   default:
